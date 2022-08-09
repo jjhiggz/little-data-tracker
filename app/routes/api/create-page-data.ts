@@ -4,6 +4,7 @@ import { prisma } from "~/db.server";
 
 export const action = async ({ request }: ActionArgs) => {
   const data = await request.json();
+  console.log(data);
   const responseContent = data.responseContent;
   const migrationId = data.migrationId;
   const title = data.title;
@@ -18,13 +19,15 @@ export const action = async ({ request }: ActionArgs) => {
     return json({ error: "no title" }, 400);
   }
 
-  await prisma.page.create({
+  const page = await prisma.page.create({
     data: {
       responseContent,
       title,
       migrationId,
     },
   });
+
+  console.log(page);
 
   return json("success", {
     headers: { "Access-Control-Allow-Origin": "*" },

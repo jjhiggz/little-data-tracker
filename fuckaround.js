@@ -26,7 +26,7 @@ const logPage = (text, page) =>
     method: "post",
     body: JSON.stringify({
       responseContent: text,
-      migrationId: "cl6l3xwof0023w6r5h5miudln",
+      migrationId: "cl6ladn3a0019kb3qpg8kjlkr",
       title: `${page}`,
     }),
   });

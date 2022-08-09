@@ -8,7 +8,7 @@
     "build:css": "npm run generate:css -- --minify",
     "build:remix": "remix build",
     "build:server": "esbuild --platform=node --format=cjs ./server.ts --outdir=build --bundle",
-    "dev": "run-p dev:*",
+    "dev": "dotenv -e ./.env.example -- run-p dev:*",
     "dev:server": "cross-env NODE_ENV=development node --inspect --require ./node_modules/dotenv/config --require ./mocks ./build/server.js",
     "dev:build": "cross-env NODE_ENV=development npm run build:server -- --watch",
     "dev:remix": "cross-env NODE_ENV=development remix watch",
@@ -20,8 +20,9 @@
     "setup": "prisma generate && prisma migrate deploy && prisma db seed",
     "start": "cross-env NODE_ENV=production node ./build/server.js",
     "start:mocks": "cross-env NODE_ENV=production node --require ./mocks --require dotenv/config ./build/server.js",
+    "migrate": "dotenv -e ./.env.example -- prisma migrate dev",
     "test": "vitest",
-    "test:e2e:dev": "start-server-and-test dev http://localhost:3000 \"npx cypress open\"",
+    "test:e2e:dev": " --start-server-and-test dev http://localhost:3000 \"npx cypress open\"",
     "pretest:e2e:run": "npm run build",
     "test:e2e:run": "cross-env PORT=8811 start-server-and-test start:mocks http://localhost:8811 \"npx cypress run\"",
     "typecheck": "tsc -b && tsc -b cypress",
@@ -72,6 +73,7 @@
     "cookie": "^0.5.0",
     "cypress": "^10.3.0",
     "dotenv": "^16.0.1",
+    "dotenv-cli": "^6.0.0",
     "esbuild": "^0.14.49",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
@@ -95,6 +97,6 @@
     "node": ">=14"
   },
   "prisma": {
-    "seed": "ts-node --require tsconfig-paths/register prisma/seed.ts"
+    "seed": "dotenv -e ./.env.example -- ts-node --require tsconfig-paths/register prisma/seed.ts"
   }
 }
